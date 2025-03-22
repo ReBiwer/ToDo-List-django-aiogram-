@@ -1,6 +1,6 @@
 from django.db import models
 
-from todo_list.core.models import Profile
+from core.models import ProfileUser
 
 
 class Tag(models.Model):
@@ -14,7 +14,7 @@ class Task(models.Model):
 
     tags = models.ManyToManyField(Tag, related_name="tags", verbose_name="Теги")
     profile = models.ForeignKey(
-        Profile,
+        ProfileUser,
         on_delete=models.CASCADE,
         related_name="tasks",
         verbose_name="Профиль пользователя"
