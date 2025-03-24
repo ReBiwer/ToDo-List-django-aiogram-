@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "core",
     "tasks_todo",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -129,3 +129,20 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REDIS_HOST = os.environ.get("REDIS_HOST")
+REDIS_PORT = os.environ.get("REDIS_PORT")
+REDIS_NUM_DB = os.environ.get("REDIS_NUM_DB")
+
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+
+CELERY_TIMEZONE = "Europe/Moscow"
+CELERY_BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_NUM_DB}"
+CELERY_TASK_TRACK_STARTED = True
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_BROKER_TRANSPORT_OPTION = {'visibility_timeout': 3600}
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_DEFAULT_QUEUE = 'default'  # celery будет использовать это имя очереди
