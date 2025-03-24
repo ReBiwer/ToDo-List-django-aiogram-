@@ -1,23 +1,9 @@
-from adrf.serializers import ModelSerializer, Serializer
-from adrf.generics import aget_object_or_404
+from adrf.serializers import ModelSerializer
 from asgiref.sync import sync_to_async
-from django.db import transaction
-from django.db.transaction import Atomic
 from rest_framework import serializers
 
 from tasks_todo.models import Tag, Task
-
-
-class AsyncAtomicContextManager(Atomic):
-    def __init__(self, using=None, savepoint=True, durable=False):
-        super().__init__(using, savepoint, durable)
-
-    async def __aenter__(self):
-        await sync_to_async(super().__enter__)()
-        return self
-
-    async def __aexit__(self, exc_type, exc_value, traceback):
-        await sync_to_async(super().__exit__)(exc_type, exc_value, traceback)
+from tasks_todo.utils import AsyncAtomicContextManager
 
 
 class TagSerializer(ModelSerializer):
@@ -26,7 +12,6 @@ class TagSerializer(ModelSerializer):
     class Meta:
         model = Tag
         fields = ["pk_tag","name"]
-        read_only_fields = ["pk_tag"]
 
     def get_pk_tag(self, obj: Tag) -> str:
         return f"{obj.name}_pk"
