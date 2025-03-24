@@ -7,7 +7,8 @@ class Tag(models.Model):
     name = models.CharField(max_length=50, verbose_name="Тег")
 
     def save(self, *args, **kwargs):
-        self.pk = f"{self.name}_pk"
+        if not self.pk_tag:
+            self.pk_tag = f"{self.name}_pk"
         super().save(*args, **kwargs)
 
 class Task(models.Model):
@@ -21,6 +22,6 @@ class Task(models.Model):
     tags = models.ManyToManyField(Tag, related_name="tags", verbose_name="Теги")
 
     def save(self, *args, **kwargs):
-        if self.pk is None:
-            self.pk = f"{self.tg_id}_{timezone.now()}"
+        if not self.pk_task:
+            self.pk_task = f"{self.tg_id}_{timezone.now()}"
         super().save(*args, **kwargs)
