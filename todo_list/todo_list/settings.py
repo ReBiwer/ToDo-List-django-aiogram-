@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "adrf",
+    "rest_framework",
+    "drf_spectacular",
+    "debug_toolbar",
     "tasks_todo",
     "django_celery_beat",
 ]
