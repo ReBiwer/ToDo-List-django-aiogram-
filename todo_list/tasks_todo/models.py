@@ -3,7 +3,7 @@ from django.utils import timezone
 
 
 class Tag(models.Model):
-    pk = models.CharField(primary_key=True)
+    pk_tag = models.CharField(primary_key=True)
     name = models.CharField(max_length=50, verbose_name="Тег")
 
     def save(self, *args, **kwargs):
@@ -11,7 +11,7 @@ class Tag(models.Model):
         super().save(*args, **kwargs)
 
 class Task(models.Model):
-    pk = models.CharField(primary_key=True)
+    pk_task = models.CharField(primary_key=True)
     tg_id = models.IntegerField(verbose_name="ID пользователя в телеграмме")
     title = models.CharField(max_length=200, verbose_name="Заголовок задачи")
     created_at = models.DateTimeField(default=timezone.now, verbose_name="Время создания")
