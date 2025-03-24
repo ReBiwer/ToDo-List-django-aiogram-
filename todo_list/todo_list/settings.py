@@ -145,7 +145,7 @@ REDIS_NUM_DB = os.environ.get("REDIS_NUM_DB")
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 
-CELERY_TIMEZONE = "Europe/Moscow"
+CELERY_TIMEZONE = "America/Adak"
 CELERY_BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_NUM_DB}"
 CELERY_TASK_TRACK_STARTED = True
 
@@ -154,4 +154,4 @@ CELERY_BROKER_TRANSPORT_OPTION = {'visibility_timeout': 3600}
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TASK_DEFAULT_QUEUE = 'default'  # celery будет использовать это имя очереди
+CELERY_TASK_DEFAULT_QUEUE = 'default'

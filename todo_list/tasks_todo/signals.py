@@ -9,8 +9,7 @@ def schedule_notification(sender, instance: Task, **kwargs):
     msg_notify = (f"Настало время исполнения задания\n"
                   f"{instance.title}\n"
                   f"{instance.description}")
-    time_notify = timezone.now() - instance.date_end
     notification_start_task.apply_async(
         args=[msg_notify, instance.tg_id],
-        eta=time_notify,
+        eta=instance.date_end,
     )
