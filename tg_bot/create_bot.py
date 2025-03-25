@@ -11,7 +11,7 @@ dotenv.load_dotenv()
 
 REDIS_HOST = os.environ.get("REDIS_HOST")
 REDIS_PORT = os.environ.get("REDIS_PORT")
-REDIS_NUM_DB = os.environ.get("REDIS_NUM_DB")
+REDIS_NUM_DB = os.environ.get("REDIS_NUM_DB_TG")
 
 redis_url = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_NUM_DB}"
 
