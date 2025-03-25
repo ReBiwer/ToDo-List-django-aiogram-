@@ -1,4 +1,4 @@
-from adrf.serializers import ModelSerializer
+from adrf.serializers import ModelSerializer, Serializer
 from asgiref.sync import sync_to_async
 from rest_framework import serializers
 
@@ -23,7 +23,7 @@ class TaskSerializer(ModelSerializer):
     class Meta:
         model = Task
         fields = ["pk_task", "tg_id", "title", "created_at", "description", "date_end", "tags"]
-        read_only_fields = ["pk_task"]
+        read_only_fields = ["pk_task", "created_at"]
 
     async def acreate(self, validated_data):
         tags_data = validated_data.pop("tags")
