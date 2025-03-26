@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-as)+ks2gjj+nlg338@ktszm_77lu!f6rb1%wr0(1hf()z-s-&8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -92,7 +92,7 @@ DATABASES = {
             "NAME": os.environ.get("DB_NAME"),
             "USER": os.environ.get("DB_USER"),
             "PASSWORD": os.environ.get("DB_PASS"),
-            "HOST": os.environ.get("DB_HOST"),
+            "HOST": os.environ.get("DB_HOST_DOCKER"),
             "PORT": os.environ.get("DB_PORT"),
         }
 }
@@ -139,7 +139,7 @@ STATIC_URL = 'static/'
 
 # DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REDIS_HOST = os.environ.get("REDIS_HOST")
+REDIS_HOST = os.environ.get("REDIS_HOST_DOCKER")
 REDIS_PORT = os.environ.get("REDIS_PORT")
 REDIS_NUM_DB = os.environ.get("REDIS_NUM_DB")
 

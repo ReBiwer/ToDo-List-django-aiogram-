@@ -47,17 +47,19 @@ services:
     volumes:
       - redis_data:/data
 
-#  app:
-#    container_name: app
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    ports:
-#      - '8000:8000'
-#    volumes:
-#      - .:/app
-#    networks:
-#      - my_network
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: todo_list/Dockerfile
+    command:
+      ["python", "todo_list/manage.py", "runserver", "0.0.0.0:8000"]
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/app
+    networks:
+      - my_network
 
 volumes:
   redis_data:
