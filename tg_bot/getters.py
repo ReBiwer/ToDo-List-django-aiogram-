@@ -6,3 +6,9 @@ from aiogram_dialog import DialogManager
 async def getter_tasks_list(dialog_manager: DialogManager, **kwargs) -> Dict[str, Any]:
     tasks = dialog_manager.start_data["tasks"]
     return {"tasks": tasks}
+
+async def getter_task_info(dialog_manager: DialogManager, **kwargs) -> Dict[str, Any]:
+    info: dict = dialog_manager.start_data["info_task"]
+    formated_tags = ', '.join(info["tags"])
+    info["tags"] = formated_tags
+    return info
