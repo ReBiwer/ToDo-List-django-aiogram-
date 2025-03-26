@@ -12,7 +12,7 @@ class TaskAPI(ModelViewSet):
 
     @extend_schema(operation_id="task_v1_aretrive")
     async def aretrieve(self, request, *args, **kwargs):
-        await super().aretrieve(request, *args, **kwargs)
+        return await super().aretrieve(request, *args, **kwargs)
 
 
     @extend_schema(
@@ -40,4 +40,4 @@ class TagAPI(ModelViewSet):
 
     @extend_schema(operation_id="tag_v1_aretrive")
     async def aretrieve(self, request, *args, **kwargs):
-        await super().aretrieve(request, *args, **kwargs)
+        return await super().aretrieve(request, *args, **kwargs)
