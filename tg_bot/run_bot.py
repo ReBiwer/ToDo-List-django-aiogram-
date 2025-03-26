@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from aiogram_dialog import setup_dialogs
-from routers.start import start_router, start_dialog
+from tg_bot.windows import start_router, start_dialog
 
 dotenv.load_dotenv()
 
