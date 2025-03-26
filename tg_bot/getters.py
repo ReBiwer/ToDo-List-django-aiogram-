@@ -5,7 +5,10 @@ from aiogram_dialog import DialogManager
 
 async def getter_start(dialog_manager: DialogManager, **kwargs) -> Dict[str, Any]:
     if dialog_manager.start_data:
-        return {"deleted": dialog_manager.start_data["deleted"]}
+        if "deleted" in dialog_manager.start_data:
+            return {"deleted": dialog_manager.start_data["deleted"]}
+        if "created" in dialog_manager.start_data:
+            return {"created": dialog_manager.start_data["created"]}
     return {}
 
 

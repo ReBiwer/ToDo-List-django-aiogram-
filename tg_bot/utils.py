@@ -1,12 +1,15 @@
+import json
+
 import dotenv
 import os
 import aiohttp
+from pydantic import with_config
 
 dotenv.load_dotenv()
 
 API_URL = os.environ.get("API_URL")
 
-async def fetch_all_tasks(tg_id: int):
+async def get_all_tasks(tg_id: int):
     url = API_URL + f'tasks/?tg_id={tg_id}'
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
@@ -45,3 +48,14 @@ async def delete_task(task_id: str):
     async with aiohttp.ClientSession() as session:
         async with session.delete(url) as response:
             return response.status
+
+async def create_new_task(data: dict):
+    url = API_URL + "tasks/"
+    headers = {
+        "Accept": "*/*",
+        "Content-Type": "application/json",
+    }
+    json_data = json.dumps(data)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=data, headers=headers) as response:
+            return await response.text()
