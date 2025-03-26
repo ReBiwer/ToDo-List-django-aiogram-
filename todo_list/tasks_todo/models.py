@@ -23,5 +23,6 @@ class Task(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk_task:
-            self.pk_task = f"{self.tg_id}_{timezone.now()}"
+            formated_date = timezone.now().strftime("%Y-%m-%d_%H:%M")
+            self.pk_task = f"{self.tg_id}_{formated_date}"
         super().save(*args, **kwargs)
