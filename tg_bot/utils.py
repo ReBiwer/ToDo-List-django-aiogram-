@@ -29,7 +29,8 @@ async def get_info_task(task_id: str):
             return await response.json()
 
 def convert_info_task(result: dict):
-    formated_tags = ', '.join(result["tags"])
+    tags = [tag["name"] for tag in result["tags"]]
+    formated_tags = ', '.join(tags)
     return {
         "pk_task": result["pk_task"],
         "title": result["title"],
@@ -38,3 +39,9 @@ def convert_info_task(result: dict):
         "date_end": result["date_end"],
         "tags": formated_tags,
     }
+
+async def delete_task(task_id: str):
+    url = API_URL + f"tasks/{task_id}/"
+    async with aiohttp.ClientSession() as session:
+        async with session.delete(url) as response:
+            return response.status

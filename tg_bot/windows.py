@@ -8,7 +8,7 @@ from aiogram_dialog import Window
 from aiogram_dialog.widgets.kbd import Button, Select
 from aiogram_dialog.widgets.text import Const, Format
 from tg_bot import utils
-from tg_bot.getters import getter_tasks_list, getter_task_info
+from tg_bot.getters import getter_tasks_list, getter_task_info, getter_start
 
 
 class MainStates(StatesGroup):
@@ -36,11 +36,19 @@ async def get_info_task(callback: CallbackQuery, button: Button, dialog_manager:
     await dialog_manager.start(MainStates.INFO_TASK, data={"info_task": task_data})
 
 
+async def delete_task(callback: CallbackQuery, button: Button, dialog_manager: DialogManager):
+    task_id = dialog_manager.start_data["info_task"]["pk_task"]
+    await utils.delete_task(task_id)
+    await dialog_manager.start(MainStates.START, data={"deleted": True})
+
+
 start_window = Window(
+    Const("Задача удалена!", when="deleted"),
     Const("Добро пожаловать в ToDo-List"),
     Button(Const("Показать задачи"), id="list_tasks", on_click=get_task_list),
     Button(Const("Добавить задачу"), id="create_task"),
     state=MainStates.START,
+    getter=getter_start,
 )
 
 list_window = Window(
@@ -62,7 +70,7 @@ info_window = Window(
            "Описание: {description}\n"
            "Дата выполнения: {date_end}\n\n"
            "Теги: {tags}"),
-    Button(Const("Удалить"), id="delete_btn"),
+    Button(Const("Удалить"), id="delete_btn", on_click=delete_task),
     Button(Const("Изменить"), id="change_btn"),
     state=MainStates.INFO_TASK,
     getter=getter_task_info,
