@@ -29,11 +29,12 @@ async def get_info_task(task_id: str):
             return await response.json()
 
 def convert_info_task(result: dict):
+    formated_tags = ', '.join(result["tags"])
     return {
         "pk_task": result["pk_task"],
         "title": result["title"],
         "created_at": result["created_at"],
         "description": result["description"],
         "date_end": result["date_end"],
-        "tags": [tag["name"] for tag in result["tags"]],
+        "tags": formated_tags,
     }
