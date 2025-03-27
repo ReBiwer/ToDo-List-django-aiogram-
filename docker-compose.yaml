@@ -59,11 +59,26 @@ services:
     volumes:
       - .:/app
     networks:
+      my_network:
+        ipv4_address: 172.18.0.5
+
+  bot:
+    container_name: bot
+    build:
+      context: .
+      dockerfile: tg_bot/Dockerfile
+    command:
+      ["python", "tg_bot/run_bot.py"]
+    volumes:
+      - .:/bot
+    networks:
       - my_network
+
 
 volumes:
   redis_data:
   app:
+  bot:
 
 networks:
   my_network:
