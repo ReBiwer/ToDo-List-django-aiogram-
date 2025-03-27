@@ -1,3 +1,4 @@
+import utils
 from datetime import datetime, date
 
 from aiogram import Router
@@ -7,11 +8,10 @@ from aiogram_dialog import DialogManager, StartMode, Dialog
 
 from aiogram.filters.state import State, StatesGroup
 from aiogram_dialog import Window
-from aiogram_dialog.widgets.kbd import Button, Select, Next, Calendar
+from aiogram_dialog.widgets.kbd import Button, Select, Next, Calendar, Back, Row
 from aiogram_dialog.widgets.input import TextInput
 from aiogram_dialog.widgets.text import Const, Format
-from tg_bot import utils
-from tg_bot.getters import getter_tasks_list, getter_task_info, getter_start
+from getters import getter_tasks_list, getter_task_info, getter_start
 
 
 class MainStates(StatesGroup):
@@ -125,6 +125,7 @@ create_dialog = Dialog(
     Window(
         Const("Введите заголовок задачи"),
         TextInput(id="task_title", on_success=Next()),
+        Back(Const("Назад")),
         state=CreateTask.TITLE,
     ),
     Window(
@@ -148,6 +149,7 @@ change_dialog = Dialog(
     Window(
         Const("Введите новый заголовок задачи"),
         TextInput(id="task_title", on_success=Next()),
+        Back(Const("Назад")),
         state=ChangeTask.TITLE,
     ),
     Window(
@@ -176,6 +178,7 @@ list_window = Window(
         items="tasks",
         on_click=get_info_task,
     ),
+    Back(Const("Назад")),
     getter=getter_tasks_list,
     state=MainStates.LIST
 )
@@ -186,8 +189,10 @@ info_window = Window(
            "Описание: {description}\n"
            "Дата выполнения: {date_end}\n\n"
            "Теги: {tags}"),
-    Button(Const("Удалить"), id="delete_btn", on_click=delete_task),
-    Button(Const("Изменить"), id="change_btn", on_click=change_task),
+    Row(Button(Const("Удалить"), id="delete_btn", on_click=delete_task),
+         Button(Const("Изменить"), id="change_btn", on_click=change_task)
+        ),
+    Back(Const("Назад")),
     state=MainStates.INFO_TASK,
     getter=getter_task_info,
 )
