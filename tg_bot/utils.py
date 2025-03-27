@@ -1,9 +1,6 @@
-import json
-
 import dotenv
 import os
 import aiohttp
-from pydantic import with_config
 
 dotenv.load_dotenv()
 
@@ -55,7 +52,16 @@ async def create_new_task(data: dict):
         "Accept": "*/*",
         "Content-Type": "application/json",
     }
-    json_data = json.dumps(data)
     async with aiohttp.ClientSession() as session:
         async with session.post(url, json=data, headers=headers) as response:
+            return await response.text()
+
+async def change_task(data: dict, pk_task: str):
+    url = API_URL + f"tasks/{pk_task}/"
+    headers = {
+        "Accept": "*/*",
+        "Content-Type": "application/json",
+    }
+    async with aiohttp.ClientSession() as session:
+        async with session.put(url, json=data, headers=headers) as response:
             return await response.text()

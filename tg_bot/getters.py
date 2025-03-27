@@ -9,6 +9,8 @@ async def getter_start(dialog_manager: DialogManager, **kwargs) -> Dict[str, Any
             return {"deleted": dialog_manager.start_data["deleted"]}
         if "created" in dialog_manager.start_data:
             return {"created": dialog_manager.start_data["created"]}
+        if "changed" in dialog_manager.start_data:
+            return {"changed": dialog_manager.start_data["changed"]}
     return {}
 
 
